@@ -5,7 +5,7 @@
         /// <summary>
         ///     Название оборудования.
         /// </summary>
-        public string Name { get; init; } = null!;
+        public string? Name { get; init; }
 
         /// <summary>
         ///     Количество оборудования в наличии.

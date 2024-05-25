@@ -15,11 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUSbooking.Domain", "MUSboo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUSbooking.Infrastructure.DataBase", "MUSbooking.Infrastructure\MUSbooking.Infrastructure.DataBase.csproj", "{0F527434-E1F3-4CC3-8935-20757CC87333}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUSbooking.Handlers", "MUSbooking.Handler\MUSbooking.Handlers.csproj", "{33B0634C-8958-46AB-B5AD-AAD18176D9AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUSbooking.Validation", "MUSbooking.Handler\MUSbooking.Validation.csproj", "{33B0634C-8958-46AB-B5AD-AAD18176D9AF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUSbooking.Services", "Service\MUSbooking.Services.csproj", "{75DC2E2F-FF86-46EC-AAA6-C4C4FEB51960}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMUSbooking.Infrastructure", "IMUSbooking.Infrastructure\IMUSbooking.Infrastructure.csproj", "{E3C424B2-5B11-40EA-991E-D3E3D57B964E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMUSbooking.Infrastructure", "IMUSbooking.Infrastructure\IMUSbooking.Infrastructure.csproj", "{E3C424B2-5B11-40EA-991E-D3E3D57B964E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUSbooking.Exceptions", "Exceptions\MUSbooking.Exceptions.csproj", "{7B4D52E5-7542-47AF-BE87-4029BB05B92B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{E3C424B2-5B11-40EA-991E-D3E3D57B964E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3C424B2-5B11-40EA-991E-D3E3D57B964E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3C424B2-5B11-40EA-991E-D3E3D57B964E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B4D52E5-7542-47AF-BE87-4029BB05B92B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B4D52E5-7542-47AF-BE87-4029BB05B92B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B4D52E5-7542-47AF-BE87-4029BB05B92B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B4D52E5-7542-47AF-BE87-4029BB05B92B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{33B0634C-8958-46AB-B5AD-AAD18176D9AF} = {42B3FF3D-F19B-4243-81F4-7ED40EEA6CA0}
 		{75DC2E2F-FF86-46EC-AAA6-C4C4FEB51960} = {42B3FF3D-F19B-4243-81F4-7ED40EEA6CA0}
 		{E3C424B2-5B11-40EA-991E-D3E3D57B964E} = {4D399665-3B85-4897-8EC1-865F14320417}
+		{7B4D52E5-7542-47AF-BE87-4029BB05B92B} = {42B3FF3D-F19B-4243-81F4-7ED40EEA6CA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D633D1C8-FDF9-4499-9253-1114217164BB}

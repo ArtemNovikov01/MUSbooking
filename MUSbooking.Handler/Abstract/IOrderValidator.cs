@@ -4,9 +4,9 @@ using MUSbooking.Domain.Models.Requests.OrderRequests.UpdateOrderResponse;
 using MUSbooking.Domain.Models.Responses.OrderResponses.OrderResponse;
 using MUSbooking.Domain.Models.Responses.OrderResponses.OrdersListResponse;
 
-namespace MUSbooking.Handlers.Abstract
+namespace MUSbooking.Validation.Abstract
 {
-    public interface IOrderHandler
+    public interface IOrderValidator
     {
         GetOrdersListResponse Get(GetOrdersListRequest request);
         GetOrderResponse Get(int id);

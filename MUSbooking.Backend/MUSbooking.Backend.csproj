@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MUSbooking.Handler\MUSbooking.Handlers.csproj" />
+    <ProjectReference Include="..\MUSbooking.Handler\MUSbooking.Validation.csproj" />
     <ProjectReference Include="..\MUSbooking.Infrastructure\MUSbooking.Infrastructure.DataBase.csproj" />
     <ProjectReference Include="..\Service\MUSbooking.Services.csproj" />
   </ItemGroup>
