@@ -36,12 +36,6 @@ namespace MUSbooking.Backend
 
         public static WebApplication ConfigureWebApplication(this WebApplication app)
         {
-            // Localization
-            app.UseRequestLocalization(opt =>
-            {
-                // configure localization
-            });
-
             app.UseSwagger();
             app.UseSwaggerUI(opt => { opt.SwaggerEndpoint("v1/swagger.json", "AllSharing Backend"); });
 

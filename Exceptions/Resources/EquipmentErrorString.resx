@@ -120,4 +120,7 @@
   <data name="EquipmentNotFoundTemplate" xml:space="preserve">
     <value>Оборудование с Id={0} не найдено</value>
   </data>
+  <data name="EquipmentsNotFoundTemplate" xml:space="preserve">
+    <value>Не найдено оборудование со следующими Id: {0}</value>
+  </data>
 </root>

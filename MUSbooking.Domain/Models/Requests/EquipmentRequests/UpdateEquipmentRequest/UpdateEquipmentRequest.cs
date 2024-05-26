@@ -3,6 +3,7 @@
     public class UpdateEquipmentRequest
     {
         public int Id { get; set; }
+
         /// <summary>
         ///     Название оборудования.
         /// </summary>

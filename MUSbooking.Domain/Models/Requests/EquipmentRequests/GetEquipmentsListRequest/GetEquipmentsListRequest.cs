@@ -17,8 +17,8 @@
         /// </summary>
         public decimal? Price { get; init; }
 
-        public int? Skip { get; init; }
+        public int Skip { get; init; }
 
-        public int? Take { get; set; }
+        public int Take { get; set; }
     }
 }

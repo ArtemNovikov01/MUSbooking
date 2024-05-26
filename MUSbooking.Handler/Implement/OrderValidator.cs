@@ -47,6 +47,9 @@ namespace MUSbooking.Validation.Implement
             if (request.Equipments is null || request.Equipments.Count == 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Должен быть выбранно хотя бы одно оборудование");
 
+            if(request.Equipments.Any(e => e.Count <= 0))
+                throw new BadRequestException(ErrorCodes.Common.BadRequest, "Количество выбранного оборудование не может быть равно 0 или быть меньше 0");
+
             _orderService.Insert(request);
         }
 

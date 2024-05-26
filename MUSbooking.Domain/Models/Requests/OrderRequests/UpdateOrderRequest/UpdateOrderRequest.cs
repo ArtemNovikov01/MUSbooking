@@ -1,4 +1,5 @@
-﻿using MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentsListResponse;
+﻿using MUSbooking.Domain.Models.Requests.OrderRequests.AddOrderRequest;
+using MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentsListResponse;
 
 namespace MUSbooking.Domain.Models.Requests.OrderRequests.UpdateOrderResponse
 {
@@ -11,6 +12,6 @@ namespace MUSbooking.Domain.Models.Requests.OrderRequests.UpdateOrderResponse
         /// </summary>
         public string Description { get; init; } = null!;
 
-        public IList<EquipmentDto> Equipments { get; init; } = null!;
+        public IList<OrderedEquipmentDto> Equipments { get; init; } = null!;
     }
 }

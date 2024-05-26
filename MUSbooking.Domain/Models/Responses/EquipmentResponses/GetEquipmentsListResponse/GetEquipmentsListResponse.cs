@@ -2,7 +2,7 @@
 {
     public class GetEquipmentsListResponse
     {
-        public IList<EquipmentDto> Equipments { get; init; } = new List<EquipmentDto>();
+        public IList<EquipmentDto> EquipmentsList { get; init; } = new List<EquipmentDto>();
 
         public int TotalCount { get; init; }
     }

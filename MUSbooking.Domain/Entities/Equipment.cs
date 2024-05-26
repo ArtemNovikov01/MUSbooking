@@ -1,10 +1,26 @@
-﻿namespace MUSbooking.Domain.Entity
+﻿using MUSbooking.Domain.Entities;
+using MUSbooking.Domain.Models.Requests.EquipmentRequests.AddEquipmentRespons;
+using MUSbooking.Domain.Models.Requests.EquipmentRequests.UpdateEquipmentResponse;
+
+namespace MUSbooking.Domain.Entity
 {
     /// <summary>
     ///     Оборудование.
     /// </summary>
     public class Equipment
     {
+        public Equipment() { }
+
+        /// <summary>
+        ///     Создание оборудования
+        /// </summary>
+        public Equipment(AddEquipmentRequest request) 
+        {
+            Name = request.Name;
+            Amount = request.Amount;
+            Price = request.Price;
+        }
+
         public int Id { get; private set; }
 
         /// <summary>
@@ -25,6 +41,25 @@
         /// <summary>
         ///     Заказ.
         /// </summary>
-        public IList<Order>? Orders { get; private set; }
+        public IList<OrderedEquipment> Orders { get; private set; } = new List<OrderedEquipment>();
+
+        #region Modify
+        public void UpdateEquipment(UpdateEquipmentRequest request)
+        {
+            Name = request.Name;
+            Amount = request.Amount;
+            Price = request.Price;
+        }
+
+        public void BuyEquipment(int count)
+        {
+            Amount -= count;
+        }
+
+        public void CancelBuyEquipment(int count)
+        {
+            Amount += count;
+        }
+        #endregion
     }
 }

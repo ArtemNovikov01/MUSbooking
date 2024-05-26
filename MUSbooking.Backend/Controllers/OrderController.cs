@@ -21,33 +21,68 @@ namespace MUSbooking.Backend.Controllers
         [HttpPost("getOrdersList")]
         public ActionResult<GetOrdersListResponse> Get(GetOrdersListRequest request)
         {
-            return Ok(_orderHandler.Get(request));
+            try
+            {
+                return Ok(_orderHandler.Get(request));
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpGet]
         public ActionResult<GetOrderResponse> Get(int id)
         {
-            return Ok(_orderHandler.Get(id));
+            try 
+            { 
+                return Ok(_orderHandler.Get(id));
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpPost("addOrder")]
         public ActionResult Insert(AddOrderRequest request)
         {
-            _orderHandler.Insert(request);
-            return Ok();
+            try
+            {
+                _orderHandler.Insert(request);
+                return Ok();
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpPut]
         public ActionResult<GetOrderResponse> Update(UpdateOrderRequest request)
         {
-            return Ok(_orderHandler.Update(request));
+            try 
+            { 
+                return Ok(_orderHandler.Update(request));
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            _orderHandler.Delete(id);
-            return Ok();
+            try 
+            { 
+                _orderHandler.Delete(id);
+                return Ok();
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
     }
 }

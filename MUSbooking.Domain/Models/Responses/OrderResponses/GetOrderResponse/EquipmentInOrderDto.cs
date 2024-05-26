@@ -1,15 +1,15 @@
 ﻿using MUSbooking.Domain.Entity;
 
-namespace MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentsListResponse
+namespace MUSbooking.Domain.Models.Responses.OrderResponses.GetOrderResponse
 {
-    public class EquipmentDto
+    public class EquipmentInOrderDto
     {
-        public EquipmentDto(Equipment equipment)
+        public EquipmentInOrderDto(Equipment equipment, int count)
         {
             Id = equipment.Id;
             Name = equipment.Name;
             Price = equipment.Price;
-            Amount = equipment.Amount;
+            Count = count;
         }
 
         public int Id { get; init; }
@@ -23,6 +23,10 @@ namespace MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentsLis
         ///     Цена.
         /// </summary>
         public decimal Price { get; init; }
-        public int Amount { get; init; }
+
+        /// <summary>
+        ///     Количество оборудования в заказе.
+        /// </summary>
+        public int? Count { get; init; }
     }
 }

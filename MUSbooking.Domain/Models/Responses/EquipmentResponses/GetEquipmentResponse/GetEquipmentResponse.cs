@@ -1,7 +1,18 @@
-﻿namespace MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentResponse
+﻿using MUSbooking.Domain.Entity;
+
+namespace MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentResponse
 {
     public class GetEquipmentResponse
     {
+        public GetEquipmentResponse(Equipment equipment) 
+        {
+            Id = equipment.Id;
+            Name = equipment.Name;
+            Amount = equipment.Amount;
+            Price = equipment.Price;
+            OrderCount = equipment.Orders.Count();
+        }
+
         public int Id { get; init; }
 
         /// <summary>

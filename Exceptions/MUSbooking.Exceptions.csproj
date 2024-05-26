@@ -26,11 +26,11 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Resources\EquipmentErrorString.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EquipmentErrorString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\OrderErrorString.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OrderErrorString.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

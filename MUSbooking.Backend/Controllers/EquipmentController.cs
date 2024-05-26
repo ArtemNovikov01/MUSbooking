@@ -21,33 +21,68 @@ namespace MUSbooking.Backend.Controllers
         [HttpPost("getEquipmentsList")]
         public ActionResult<GetEquipmentsListResponse> Get(GetEquipmentsListRequest request)
         {
-            return Ok(_equipmentHandler.Get(request));
+            try
+            {
+                return Ok(_equipmentHandler.Get(request));
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpGet]
         public ActionResult<GetEquipmentResponse> Get(int id)
         {
-            return Ok(_equipmentHandler.Get(id));
+            try 
+            { 
+                return Ok(_equipmentHandler.Get(id));
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpPost("addEquipment")]
         public ActionResult Insert(AddEquipmentRequest request)
         {
-            _equipmentHandler.Insert(request);
-            return Ok();
+            try
+            {
+                _equipmentHandler.Insert(request);
+                return Ok();
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpPut]
         public ActionResult<GetEquipmentResponse> Update(UpdateEquipmentRequest request)
         {
-            return Ok(_equipmentHandler.Update(request));
+            try
+            {
+                return Ok(_equipmentHandler.Update(request));
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
 
         [HttpDelete]
         public ActionResult Delete(int id)
         {
-            _equipmentHandler.Delete(id);
-            return Ok();
+            try
+            {
+                _equipmentHandler.Delete(id);
+                return Ok();
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ namespace MUSbooking.Exceptions.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class EquipmentErrorString {
+    public class EquipmentErrorString {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace MUSbooking.Exceptions.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MUSbooking.Exceptions.Resources.EquipmentErrorString", typeof(EquipmentErrorString).Assembly);
@@ -51,7 +51,7 @@ namespace MUSbooking.Exceptions.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,9 +63,18 @@ namespace MUSbooking.Exceptions.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Оборудование с Id={0} не найдено.
         /// </summary>
-        internal static string EquipmentNotFoundTemplate {
+        public static string EquipmentNotFoundTemplate {
             get {
                 return ResourceManager.GetString("EquipmentNotFoundTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Не найдено оборудование со следующими Id: {0}.
+        /// </summary>
+        public static string EquipmentsNotFoundTemplate {
+            get {
+                return ResourceManager.GetString("EquipmentsNotFoundTemplate", resourceCulture);
             }
         }
     }

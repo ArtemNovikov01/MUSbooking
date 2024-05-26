@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Exceptions\MUSbooking.Exceptions.csproj" />
     <ProjectReference Include="..\MUSbooking.Domain\MUSbooking.Domain.csproj" />
   </ItemGroup>
 

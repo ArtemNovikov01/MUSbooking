@@ -1,7 +1,17 @@
-﻿namespace MUSbooking.Domain.Models.Responses.OrderResponses.OrdersListResponse
+﻿using MUSbooking.Domain.Entity;
+
+namespace MUSbooking.Domain.Models.Responses.OrderResponses.OrdersListResponse
 {
     public class OrderDto
     {
+        public OrderDto(Order order)
+        {
+            Id = order.Id;
+            ShortDescription = (order.Description.Length > 10) ? order.Description.Substring(0, 10) + "..." : order.Description;
+            CreatedAt = order.CreatedAt;
+            EquipmentsCount = order.Equipments.Count;
+            Price = order.Price;
+        }
         public int Id { get; init; }
 
         /// <summary>

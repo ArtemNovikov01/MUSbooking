@@ -1,5 +1,4 @@
-﻿using MUSbooking.Domain.Entity;
-using MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentsListResponse;
+﻿using MUSbooking.Domain.Models.Requests.OrderRequests.AddOrderRequest;
 
 namespace MUSbooking.Domain.Models.Requests.OrderRequests.AddOrderResponse
 {
@@ -13,6 +12,6 @@ namespace MUSbooking.Domain.Models.Requests.OrderRequests.AddOrderResponse
         /// <summary>
         ///     Оборудование добавленное в заказ.
         /// </summary>
-        public IList<EquipmentDto> Equipments { get; init; } = null!;
+        public IList<OrderedEquipmentDto> Equipments { get; init; } = null!;
     }
 }
