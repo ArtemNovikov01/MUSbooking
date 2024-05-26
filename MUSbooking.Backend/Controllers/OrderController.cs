@@ -20,13 +20,17 @@ namespace MUSbooking.Backend.Controllers
         }
 
         [HttpPost("getOrdersList")]
-        public ActionResult<GetOrdersListResponse> Get(GetOrdersListRequest request)
+        public async Task<ActionResult<GetOrdersListResponse>> Get(GetOrdersListRequest request, CancellationToken cancellationToken)
         {
             try
             {
-                return Ok(_orderHandler.Get(request));
+                return Ok(await _orderHandler.Get(request, cancellationToken));
             }
             catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (EntityNotFoundException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -37,13 +41,17 @@ namespace MUSbooking.Backend.Controllers
         }
 
         [HttpGet]
-        public ActionResult<GetOrderResponse> Get(int id)
+        public async Task<ActionResult<GetOrderResponse>> Get(int id, CancellationToken cancellationToken)
         {
             try 
             { 
-                return Ok(_orderHandler.Get(id));
+                return Ok(await _orderHandler.Get(id, cancellationToken));
             }
             catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (EntityNotFoundException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -54,14 +62,18 @@ namespace MUSbooking.Backend.Controllers
         }
 
         [HttpPost("addOrder")]
-        public ActionResult Insert(AddOrderRequest request)
+        public async Task<ActionResult> Insert(AddOrderRequest request, CancellationToken cancellationToken)
         {
             try
             {
-                _orderHandler.Insert(request);
+                await _orderHandler.Insert(request, cancellationToken);
                 return Ok();
             }
             catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (EntityNotFoundException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -72,13 +84,17 @@ namespace MUSbooking.Backend.Controllers
         }
 
         [HttpPut]
-        public ActionResult<GetOrderResponse> Update(UpdateOrderRequest request)
+        public async Task<ActionResult<GetOrderResponse>> Update(UpdateOrderRequest request, CancellationToken cancellationToken)
         {
             try 
             { 
-                return Ok(_orderHandler.Update(request));
+                return Ok(await _orderHandler.Update(request, cancellationToken));
             }
             catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (EntityNotFoundException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -89,14 +105,18 @@ namespace MUSbooking.Backend.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id, CancellationToken cancellationToken)
         {
             try 
             { 
-                _orderHandler.Delete(id);
+                await _orderHandler.Delete(id, cancellationToken);
                 return Ok();
             }
             catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (EntityNotFoundException exception)
             {
                 return BadRequest(exception.Message);
             }

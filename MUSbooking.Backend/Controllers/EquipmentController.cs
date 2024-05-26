@@ -20,13 +20,17 @@ namespace MUSbooking.Backend.Controllers
         }
 
         [HttpPost("getEquipmentsList")]
-        public ActionResult<GetEquipmentsListResponse> Get(GetEquipmentsListRequest request)
+        public async Task<ActionResult<GetEquipmentsListResponse>> Get(GetEquipmentsListRequest request, CancellationToken cancellationToken)
         {
             try
             {
-                return Ok(_equipmentHandler.Get(request));
+                return Ok(await _equipmentHandler.Get(request, cancellationToken));
             }
             catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (EntityNotFoundException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -37,13 +41,17 @@ namespace MUSbooking.Backend.Controllers
         }
 
         [HttpGet]
-        public ActionResult<GetEquipmentResponse> Get(int id)
+        public async Task<ActionResult<GetEquipmentResponse>> Get(int id, CancellationToken cancellationToken)
         {
             try 
             { 
-                return Ok(_equipmentHandler.Get(id));
+                return Ok(await _equipmentHandler.Get(id, cancellationToken));
             }
             catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (EntityNotFoundException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -54,14 +62,18 @@ namespace MUSbooking.Backend.Controllers
         }
 
         [HttpPost("addEquipment")]
-        public ActionResult Insert(AddEquipmentRequest request)
+        public async Task<ActionResult> Insert(AddEquipmentRequest request, CancellationToken cancellationToken)
         {
             try
             {
-                _equipmentHandler.Insert(request);
+                await _equipmentHandler.Insert(request, cancellationToken);
                 return Ok();
             }
             catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (EntityNotFoundException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -72,13 +84,17 @@ namespace MUSbooking.Backend.Controllers
         }
 
         [HttpPut]
-        public ActionResult<GetEquipmentResponse> Update(UpdateEquipmentRequest request)
+        public async Task<ActionResult<GetEquipmentResponse>> Update(UpdateEquipmentRequest request, CancellationToken cancellationToken)
         {
             try
             {
-                return Ok(_equipmentHandler.Update(request));
+                return Ok(await _equipmentHandler.Update(request, cancellationToken));
             }
             catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (EntityNotFoundException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -89,14 +105,18 @@ namespace MUSbooking.Backend.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id, CancellationToken cancellationToken)
         {
             try
             {
-                _equipmentHandler.Delete(id);
+                await _equipmentHandler.Delete(id, cancellationToken);
                 return Ok();
             }
             catch (BadRequestException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch (EntityNotFoundException exception)
             {
                 return BadRequest(exception.Message);
             }

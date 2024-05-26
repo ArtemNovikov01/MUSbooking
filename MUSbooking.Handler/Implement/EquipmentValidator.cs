@@ -16,7 +16,8 @@ namespace MUSbooking.Validation.Implement
         {
             _equipmentService = equipmentService;
         }
-        public GetEquipmentsListResponse Get(GetEquipmentsListRequest request)
+
+        public async Task<GetEquipmentsListResponse> Get(GetEquipmentsListRequest request, CancellationToken cancellationToken)
         {
             if (request.Amount < 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Оставшееся оборудование не может быть меньше 0");
@@ -30,18 +31,18 @@ namespace MUSbooking.Validation.Implement
             if (request.Take < 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Нельзя выбрать меньше 0");
 
-            return _equipmentService.Get(request);
+            return await _equipmentService.Get(request, cancellationToken);
         }
 
-        public GetEquipmentResponse Get(int id)
+        public async Task<GetEquipmentResponse> Get(int id, CancellationToken cancellationToken)
         {
             if ((id) <= 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Невалидный идентификатор");
 
-            return _equipmentService.Get(id);
+            return await _equipmentService.Get(id, cancellationToken);
         }
 
-        public void Insert(AddEquipmentRequest request)
+        public async Task Insert(AddEquipmentRequest request, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(request.Name))
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Поле описание должно быть заполнено");
@@ -52,10 +53,10 @@ namespace MUSbooking.Validation.Implement
             if (request.Price < 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Цена не может быть меньше 0");
 
-            _equipmentService.Insert(request);
+            await _equipmentService.Insert(request, cancellationToken);
         }
 
-        public GetEquipmentResponse Update(UpdateEquipmentRequest request)
+        public async Task<GetEquipmentResponse> Update(UpdateEquipmentRequest request, CancellationToken cancellationToken)
         {
             if (request.Id <= 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Невалидный идентификатор");
@@ -69,14 +70,15 @@ namespace MUSbooking.Validation.Implement
             if (request.Price < 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Цена не может быть меньше 0");
 
-            return _equipmentService.Update(request);
+            return await _equipmentService.Update(request, cancellationToken);
         }
-        public void Delete(int id)
+
+        public async Task Delete(int id, CancellationToken cancellationToken)
         {
             if (id <= 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Невалидный идентификатор");
 
-            _equipmentService.Delete(id);
+            await _equipmentService.Delete(id, cancellationToken);
         }
     }
 }

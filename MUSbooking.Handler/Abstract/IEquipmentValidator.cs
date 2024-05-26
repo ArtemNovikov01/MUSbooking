@@ -8,10 +8,10 @@ namespace MUSbooking.Validation.Abstract
 {
     public interface IEquipmentValidator
     {
-        GetEquipmentsListResponse Get(GetEquipmentsListRequest request);
-        GetEquipmentResponse Get(int id);
-        void Insert(AddEquipmentRequest request);
-        GetEquipmentResponse Update(UpdateEquipmentRequest request);
-        void Delete(int id);
+        Task<GetEquipmentsListResponse> Get(GetEquipmentsListRequest request, CancellationToken cancellationToken);
+        Task<GetEquipmentResponse> Get(int id, CancellationToken cancellationToken);
+        Task Insert(AddEquipmentRequest request, CancellationToken cancellationToken);
+        Task<GetEquipmentResponse> Update(UpdateEquipmentRequest request, CancellationToken cancellationToken);
+        Task Delete(int id, CancellationToken cancellationToken);
     }
 }

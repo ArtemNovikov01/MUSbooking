@@ -8,10 +8,10 @@ namespace MUSbooking.Services.Abstract
 {
     public interface IOrderService
     {
-        GetOrdersListResponse Get(GetOrdersListRequest request);
-        GetOrderResponse Get(int id);
-        void Insert(AddOrderRequest request);
-        GetOrderResponse Update(UpdateOrderRequest request);
-        void Delete(int id);
+        Task<GetOrdersListResponse> Get(GetOrdersListRequest request, CancellationToken cancellationToken);
+        Task<GetOrderResponse> Get(int id, CancellationToken cancellationToken);
+        Task Insert(AddOrderRequest request, CancellationToken cancellationToken);
+        Task<GetOrderResponse> Update(UpdateOrderRequest request, CancellationToken cancellationToken);
+        Task Delete(int id, CancellationToken cancellationToken);
     }
 }

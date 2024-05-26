@@ -25,22 +25,23 @@ namespace MUSbooking.Services.Implement
             _musBookingDbContext = musBookingDbContext;
         }
 
-        public GetOrdersListResponse Get(GetOrdersListRequest request)
+        public async Task<GetOrdersListResponse> Get(GetOrdersListRequest request, CancellationToken cancellationToken)
         {
             var orderQury = _musBookingDbContext.Orders
+                .Include(o => o.Equipments)
                 .FilterByDescription(request.Description)
                 .FilterByPrice(request.Price)
                 .FilterByCreatedAt(request.CreatedAt);
 
-            var orderCount = orderQury.Count();
+            var orderCount = await orderQury.CountAsync(cancellationToken);
 
-            var equipmentList = orderQury
+            var equipmentList = await orderQury
                 .OrderBy(e => e.Id)
                 .ThenBy(e => e.CreatedAt)
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .Select(e => new OrderDto(e))
-                .ToList();
+                .ToListAsync(cancellationToken);
 
             return new GetOrdersListResponse()
             {
@@ -49,11 +50,11 @@ namespace MUSbooking.Services.Implement
             };
         }
 
-        public GetOrderResponse Get(int id)
+        public async Task<GetOrderResponse> Get(int id, CancellationToken cancellationToken)
         {
-            var order = _musBookingDbContext.Orders
+            var order = await _musBookingDbContext.Orders
                 .Include(o => o.Equipments)
-                .FirstOrDefault(o => o.Id == id);
+                .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
 
             EntityNotFoundException.ThrowIfNull(order, OrderErrorString.OrderNotFoundTemplate, id);
 
@@ -73,7 +74,7 @@ namespace MUSbooking.Services.Implement
             return new GetOrderResponse(order, equipmentsDto);
         }
 
-        public void Insert(AddOrderRequest request)
+        public async Task Insert(AddOrderRequest request, CancellationToken cancellationToken)
         {
             var equipments = _musBookingDbContext.Equipments.AsEnumerable()
                 .Where(e => request.Equipments.Any(eFromRequest => eFromRequest.Id == e.Id))
@@ -86,14 +87,14 @@ namespace MUSbooking.Services.Implement
             var orderedEquipment = ManageOrderedEquipment(order.Id, request.Equipments.ToList(), equipments.ToList());
             order.AddEquipments(orderedEquipment);
 
-            _musBookingDbContext.SaveChanges();
+            await _musBookingDbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public GetOrderResponse Update(UpdateOrderRequest request)
+        public async Task<GetOrderResponse> Update(UpdateOrderRequest request, CancellationToken cancellationToken)
         {
-            var order = _musBookingDbContext.Orders
+            var order = await _musBookingDbContext.Orders
                 .Include(o => o.Equipments)
-                .FirstOrDefault(o => o.Id == request.Id);
+                .FirstOrDefaultAsync(o => o.Id == request.Id, cancellationToken);
 
             EntityNotFoundException.ThrowIfNull(order, OrderErrorString.OrderNotFoundTemplate, request.Id);
 
@@ -113,7 +114,7 @@ namespace MUSbooking.Services.Implement
             _musBookingDbContext.OrderedEquipments.RemoveRange(RemovedOrderedEquipment);
 
             order.AddEquipments(newOrderedEquipment);
-            _musBookingDbContext.SaveChanges();
+            await _musBookingDbContext.SaveChangesAsync(cancellationToken);
 
             var equipmentsDto = new List<EquipmentInOrderDto>();
 
@@ -128,11 +129,11 @@ namespace MUSbooking.Services.Implement
             return new GetOrderResponse(order, equipmentsDto);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id, CancellationToken cancellationToken)
         {
-            var order = _musBookingDbContext.Orders
+            var order = await _musBookingDbContext.Orders
                 .Include(o => o.Equipments)
-                .FirstOrDefault(o => o.Id == id);
+                .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
 
             EntityNotFoundException.ThrowIfNull(order, OrderErrorString.OrderNotFoundTemplate, id);
 
@@ -146,7 +147,7 @@ namespace MUSbooking.Services.Implement
             _musBookingDbContext.Equipments.UpdateRange(recoverEquipments);
 
             _musBookingDbContext.Orders.Remove(order);
-            _musBookingDbContext.SaveChanges();
+            await _musBookingDbContext.SaveChangesAsync(cancellationToken);
         }
 
         private List<Equipment> RecoveryAmountEquipment(List<Equipment> equipments, List<OrderedEquipment> oldEquipments)

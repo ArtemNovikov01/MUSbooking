@@ -6,6 +6,7 @@ using MUSbooking.Domain.Models.Responses.OrderResponses.OrdersListResponse;
 using MUSbooking.Exceptions.Common.Exceptions;
 using MUSbooking.Validation.Abstract;
 using MUSbooking.Services.Abstract;
+using System.Threading;
 
 namespace MUSbooking.Validation.Implement
 {
@@ -17,7 +18,7 @@ namespace MUSbooking.Validation.Implement
             _orderService = orderService;
         }
 
-        public GetOrdersListResponse Get(GetOrdersListRequest request)
+        public async Task<GetOrdersListResponse> Get(GetOrdersListRequest request, CancellationToken cancellationToken)
         {
             if (request.Price < 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Цена не может быть меньше 0");
@@ -28,17 +29,17 @@ namespace MUSbooking.Validation.Implement
             if (request.Take < 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Нельзя выбрать меньше 0");
 
-            return _orderService.Get(request);
+            return await _orderService.Get(request, cancellationToken);
         }
 
-        public GetOrderResponse Get(int id)
+        public async Task<GetOrderResponse> Get(int id, CancellationToken cancellationToken)
         {
             if (id <= 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Невалидный идентификатор");
 
-            return _orderService.Get(id);
+            return await _orderService.Get(id, cancellationToken);
         }
-        public void Insert(AddOrderRequest request)
+        public async Task Insert(AddOrderRequest request, CancellationToken cancellationToken)
         {
 
             if (string.IsNullOrEmpty(request.Description))
@@ -50,10 +51,10 @@ namespace MUSbooking.Validation.Implement
             if(request.Equipments.Any(e => e.Count <= 0))
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Количество выбранного оборудование не может быть равно 0 или быть меньше 0");
 
-            _orderService.Insert(request);
+            await _orderService.Insert(request, cancellationToken);
         }
 
-        public GetOrderResponse Update(UpdateOrderRequest request)
+        public async Task<GetOrderResponse> Update(UpdateOrderRequest request, CancellationToken cancellationToken)
         {
 
             if (request.Id <= 0)
@@ -65,15 +66,15 @@ namespace MUSbooking.Validation.Implement
             if (request.Equipments is null || request.Equipments.Count == 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Должен быть выбранно хотя бы одно оборудование");
 
-            return _orderService.Update(request);
+            return await _orderService.Update(request, cancellationToken);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id, CancellationToken cancellationToken)
         {
             if (id <= 0)
                 throw new BadRequestException(ErrorCodes.Common.BadRequest, "Невалидный идентификатор");
 
-            _orderService.Delete(id);
+            await _orderService.Delete(id ,cancellationToken);
         }
     }
 }

@@ -10,6 +10,6 @@ namespace MUSbooking.Services
         public DbSet<Equipment> Equipments { get; }
         public DbSet <OrderedEquipment> OrderedEquipments { get; }
 
-        int SaveChanges();
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
