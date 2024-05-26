@@ -4,6 +4,7 @@ using MUSbooking.Domain.Models.Requests.OrderRequests.OrderFilterRequest;
 using MUSbooking.Domain.Models.Requests.OrderRequests.UpdateOrderResponse;
 using MUSbooking.Domain.Models.Responses.OrderResponses.OrderResponse;
 using MUSbooking.Domain.Models.Responses.OrderResponses.OrdersListResponse;
+using MUSbooking.Exceptions.Common.Exceptions;
 using MUSbooking.Validation.Abstract;
 
 namespace MUSbooking.Backend.Controllers
@@ -25,9 +26,13 @@ namespace MUSbooking.Backend.Controllers
             {
                 return Ok(_orderHandler.Get(request));
             }
-            catch (Exception exception)
+            catch (BadRequestException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ошибка получения списка заказов");
             }
         }
 
@@ -38,9 +43,13 @@ namespace MUSbooking.Backend.Controllers
             { 
                 return Ok(_orderHandler.Get(id));
             }
-            catch (Exception exception)
+            catch (BadRequestException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ошибка при поучении информации об заказа");
             }
         }
 
@@ -52,9 +61,13 @@ namespace MUSbooking.Backend.Controllers
                 _orderHandler.Insert(request);
                 return Ok();
             }
-            catch (Exception exception)
+            catch (BadRequestException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ошибка при добавлении заказа");
             }
         }
 
@@ -65,9 +78,13 @@ namespace MUSbooking.Backend.Controllers
             { 
                 return Ok(_orderHandler.Update(request));
             }
-            catch (Exception exception)
+            catch (BadRequestException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ошибка при оьновлении заказа");
             }
         }
 
@@ -79,9 +96,13 @@ namespace MUSbooking.Backend.Controllers
                 _orderHandler.Delete(id);
                 return Ok();
             }
-            catch (Exception exception)
+            catch (BadRequestException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ошибка при удалении заказа");
             }
         }
     }

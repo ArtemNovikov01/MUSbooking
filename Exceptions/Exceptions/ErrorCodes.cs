@@ -7,6 +7,5 @@ public static class ErrorCodes
     public static class Common
     {
         public const string BadRequest = Prefix + "_BAD_REQUEST";
-        public const string NotFound = Prefix + "_NOT_FOUND";
     }
 }

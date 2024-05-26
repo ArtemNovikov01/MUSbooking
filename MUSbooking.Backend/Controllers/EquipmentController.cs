@@ -4,6 +4,7 @@ using MUSbooking.Domain.Models.Requests.EquipmentRequests.GetEquipmentsListReque
 using MUSbooking.Domain.Models.Requests.EquipmentRequests.UpdateEquipmentResponse;
 using MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentResponse;
 using MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentsListResponse;
+using MUSbooking.Exceptions.Common.Exceptions;
 using MUSbooking.Validation.Abstract;
 
 namespace MUSbooking.Backend.Controllers
@@ -25,9 +26,13 @@ namespace MUSbooking.Backend.Controllers
             {
                 return Ok(_equipmentHandler.Get(request));
             }
-            catch (Exception exception)
+            catch (BadRequestException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ошибка получения списка оборудования");
             }
         }
 
@@ -38,9 +43,13 @@ namespace MUSbooking.Backend.Controllers
             { 
                 return Ok(_equipmentHandler.Get(id));
             }
-            catch (Exception exception)
+            catch (BadRequestException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ошибка при получении информации об оборудования");
             }
         }
 
@@ -52,9 +61,13 @@ namespace MUSbooking.Backend.Controllers
                 _equipmentHandler.Insert(request);
                 return Ok();
             }
-            catch (Exception exception)
+            catch (BadRequestException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ошибка при добавлении оборудования");
             }
         }
 
@@ -65,9 +78,13 @@ namespace MUSbooking.Backend.Controllers
             {
                 return Ok(_equipmentHandler.Update(request));
             }
-            catch (Exception exception)
+            catch (BadRequestException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ошибка при обновлении оборудования");
             }
         }
 
@@ -79,9 +96,13 @@ namespace MUSbooking.Backend.Controllers
                 _equipmentHandler.Delete(id);
                 return Ok();
             }
-            catch (Exception exception)
+            catch (BadRequestException exception)
             {
                 return BadRequest(exception.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ошибка при удалении оборудования");
             }
         }
     }
