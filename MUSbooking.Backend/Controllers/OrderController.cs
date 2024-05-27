@@ -14,6 +14,7 @@ namespace MUSbooking.Backend.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderValidator _orderHandler;
+
         public OrderController(IOrderValidator orderHandler)
         {
             _orderHandler = orderHandler;

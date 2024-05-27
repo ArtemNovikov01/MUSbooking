@@ -14,6 +14,7 @@ namespace MUSbooking.Backend.Controllers
     public class EquipmentController : ControllerBase
     {
         private readonly IEquipmentValidator _equipmentHandler;
+
         public EquipmentController(IEquipmentValidator equipmentHandler)
         {
             _equipmentHandler = equipmentHandler;

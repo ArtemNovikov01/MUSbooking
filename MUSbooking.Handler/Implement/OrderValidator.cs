@@ -13,6 +13,7 @@ namespace MUSbooking.Validation.Implement
     public class OrderValidator : IOrderValidator
     {
         private readonly IOrderService _orderService;
+
         public OrderValidator(IOrderService orderService) 
         {
             _orderService = orderService;
@@ -39,6 +40,7 @@ namespace MUSbooking.Validation.Implement
 
             return await _orderService.Get(id, cancellationToken);
         }
+
         public async Task Insert(AddOrderRequest request, CancellationToken cancellationToken)
         {
 

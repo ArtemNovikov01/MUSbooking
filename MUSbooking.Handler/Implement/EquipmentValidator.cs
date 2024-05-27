@@ -12,6 +12,7 @@ namespace MUSbooking.Validation.Implement
     public class EquipmentValidator : IEquipmentValidator
     {
         private readonly IEquipmentService _equipmentService;
+
         public EquipmentValidator(IEquipmentService equipmentService) 
         {
             _equipmentService = equipmentService;
