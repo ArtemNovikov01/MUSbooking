@@ -59,17 +59,12 @@ namespace MUSbooking.Services.Implement
             EntityNotFoundException.ThrowIfNull(order, OrderErrorString.OrderNotFoundTemplate, id);
 
             var equipments = _musBookingDbContext.Equipments.AsEnumerable()
-                .Where(e => order.Equipments.Any(oe => e.Id == oe.EquipmentId)).ToList();
+                .Where(e => order.Equipments.Any(orderE => e.Id == orderE.EquipmentId)).ToList();
 
-            var equipmentsDto = new List<EquipmentInOrderDto>();
-
-            order.Equipments.ToList().ForEach(oe =>
-            {
-                equipments.ForEach(e => { 
-                    if(e.Id == oe.EquipmentId)
-                        equipmentsDto.Add(new EquipmentInOrderDto(e, oe.Count));
-                });
-            });
+            var equipmentsDto = order.Equipments
+                .Join(equipments, orderE => orderE.EquipmentId, e => e.Id,
+                    (orderE, e) => new EquipmentInOrderDto(e, orderE.Count))
+                .ToList();
 
             return new GetOrderResponse(order, equipmentsDto);
         }
@@ -104,27 +99,20 @@ namespace MUSbooking.Services.Implement
 
             ValidateEquipments(request.Equipments.ToList(), equipments);
 
-            var removedOrderedEquipment = order.Equipments.ToList();
-
-            var restoredEquipment = RecoveryAmountEquipment(equipments, order.Equipments.ToList());
-            var restoredOrderedEquipment = ManageOrderedEquipment(order.Id, request.Equipments.ToList(), restoredEquipment);
+            var restoredOrderedEquipment = ManageOrderedEquipment(order.Id, request.Equipments.ToList(),
+                RecoveryAmountEquipment(equipments, order.Equipments.ToList()));
 
             order.UpdateDescription(request.Description);
 
-            _musBookingDbContext.OrderedEquipments.RemoveRange(removedOrderedEquipment);
+            _musBookingDbContext.OrderedEquipments.RemoveRange(order.Equipments.ToList());
 
             order.AddEquipments(restoredOrderedEquipment);
             await _musBookingDbContext.SaveChangesAsync(cancellationToken);
 
-            var equipmentsDto = new List<EquipmentInOrderDto>();
-
-            order.Equipments.ToList().ForEach(oe =>
-            {
-                equipments.ForEach(e => {
-                    if (e.Id == oe.EquipmentId)
-                        equipmentsDto.Add(new EquipmentInOrderDto(e, oe.Count));
-                });
-            });
+            var equipmentsDto = order.Equipments
+                .Join(equipments, orderE => orderE.EquipmentId, e => e.Id, 
+                    (oe, e) => new EquipmentInOrderDto(e, oe.Count))
+                .ToList();
 
             return new GetOrderResponse(order, equipmentsDto);
         }
@@ -152,42 +140,34 @@ namespace MUSbooking.Services.Implement
 
         private List<Equipment> RecoveryAmountEquipment(List<Equipment> equipments, List<OrderedEquipment> oldEquipments)
         {
-            List<Equipment> restoredEquipment = equipments;
-            oldEquipments.ForEach(oldEquipment => {
-                restoredEquipment.ForEach(equipment =>
-                {
-                    if (equipment.Id == oldEquipment.EquipmentId)
-                    {
-                        equipment.CancelBuyEquipment(oldEquipment.Count);
-                    }
-                });
+            equipments.ForEach(equipment =>
+            {
+                var oldEquipment = oldEquipments.FirstOrDefault(oe => oe.EquipmentId == equipment.Id);
+                if (oldEquipment != null)
+                    equipment.CancelBuyEquipment(oldEquipment.Count);
             });
-            return restoredEquipment;
+            return equipments;
         }
 
         private List<OrderedEquipment> ManageOrderedEquipment(int orderId, List<OrderedEquipmentDto> requestedEquipment, List<Equipment> availableEquipment)
         {
-            List<OrderedEquipment> restoredOrderedEquipments = new List<OrderedEquipment>();
-
-            requestedEquipment.ForEach(requestedItem =>
+            List<OrderedEquipment> restoredOrderedEquipments = requestedEquipment
+                .Select(requestedItem =>
             {
-                decimal price = 0;
-                availableEquipment.ForEach(available =>
-                {
-                    if (available.Id == requestedItem.Id)
-                    {
-                        if (available.Amount < requestedItem.Count)
-                            throw new BadRequestException(ErrorCodes.Common.BadRequest,
-                                $"Запрашиваемое количество оборудования превышает доступное количество - {available.Amount}.");
+                var available = availableEquipment
+                    .FirstOrDefault(a => a.Id == requestedItem.Id);
+                if (available == null)
+                    throw new BadRequestException(ErrorCodes.Common.BadRequest,
+                        $"Оборудование с ID {requestedItem.Id} не найдено.");
 
-                        price = available.Price;
-                        available.BuyEquipment(requestedItem.Count);
-                    }
-                });
+                if (available.Amount < requestedItem.Count)
+                    throw new BadRequestException(ErrorCodes.Common.BadRequest,
+                        $"Запрашиваемое количество оборудования превышает доступное количество - {available.Amount}.");
 
-                restoredOrderedEquipments.Add(_musBookingDbContext.OrderedEquipments
-                    .Add(new OrderedEquipment(requestedItem.Id, orderId, requestedItem.Count, price)).Entity);
-            });
+                available.BuyEquipment(requestedItem.Count);
+                return _musBookingDbContext.OrderedEquipments.Add(
+                    new OrderedEquipment(requestedItem.Id, orderId, requestedItem.Count, available.Price)).Entity;
+            }).ToList();
 
             return restoredOrderedEquipments;
         }
