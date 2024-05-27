@@ -26,11 +26,7 @@ namespace MUSbooking.Backend.Controllers
             {
                 return Ok(await _equipmentHandler.Get(request, cancellationToken));
             }
-            catch (BadRequestException exception)
-            {
-                return BadRequest(exception.Message);
-            }
-            catch (EntityNotFoundException exception)
+            catch (BaseException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -47,11 +43,7 @@ namespace MUSbooking.Backend.Controllers
             { 
                 return Ok(await _equipmentHandler.Get(id, cancellationToken));
             }
-            catch (BadRequestException exception)
-            {
-                return BadRequest(exception.Message);
-            }
-            catch (EntityNotFoundException exception)
+            catch (BaseException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -69,11 +61,7 @@ namespace MUSbooking.Backend.Controllers
                 await _equipmentHandler.Insert(request, cancellationToken);
                 return Ok();
             }
-            catch (BadRequestException exception)
-            {
-                return BadRequest(exception.Message);
-            }
-            catch (EntityNotFoundException exception)
+            catch (BaseException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -90,11 +78,7 @@ namespace MUSbooking.Backend.Controllers
             {
                 return Ok(await _equipmentHandler.Update(request, cancellationToken));
             }
-            catch (BadRequestException exception)
-            {
-                return BadRequest(exception.Message);
-            }
-            catch (EntityNotFoundException exception)
+            catch (BaseException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -112,11 +96,7 @@ namespace MUSbooking.Backend.Controllers
                 await _equipmentHandler.Delete(id, cancellationToken);
                 return Ok();
             }
-            catch (BadRequestException exception)
-            {
-                return BadRequest(exception.Message);
-            }
-            catch (EntityNotFoundException exception)
+            catch (BaseException exception)
             {
                 return BadRequest(exception.Message);
             }
