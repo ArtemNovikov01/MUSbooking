@@ -27,15 +27,15 @@ namespace MUSbooking.Services.Implement
 
         public async Task<GetOrdersListResponse> Get(GetOrdersListRequest request, CancellationToken cancellationToken)
         {
-            var orderQury = _musBookingDbContext.Orders
+            var orderQuery = _musBookingDbContext.Orders
                 .Include(o => o.Equipments)
                 .FilterByDescription(request.Description)
                 .FilterByPrice(request.Price)
                 .FilterByCreatedAt(request.CreatedAt);
 
-            var orderCount = await orderQury.CountAsync(cancellationToken);
+            var orderCount = await orderQuery.CountAsync(cancellationToken);
 
-            var equipmentList = await orderQury
+            var equipmentList = await orderQuery
                 .OrderBy(e => e.Id)
                 .ThenBy(e => e.CreatedAt)
                 .Skip(request.Skip)
@@ -104,16 +104,16 @@ namespace MUSbooking.Services.Implement
 
             ValidateEquipments(request.Equipments.ToList(), equipments);
 
-            var RemovedOrderedEquipment = order.Equipments.ToList();
+            var removedOrderedEquipment = order.Equipments.ToList();
 
-            var newEquipment = RecoveryAmountEquipment(equipments, order.Equipments.ToList());
-            var newOrderedEquipment = ManageOrderedEquipment(order.Id, request.Equipments.ToList(), newEquipment);
+            var restoredEquipment = RecoveryAmountEquipment(equipments, order.Equipments.ToList());
+            var restoredOrderedEquipment = ManageOrderedEquipment(order.Id, request.Equipments.ToList(), restoredEquipment);
 
             order.UpdateDescription(request.Description);
 
-            _musBookingDbContext.OrderedEquipments.RemoveRange(RemovedOrderedEquipment);
+            _musBookingDbContext.OrderedEquipments.RemoveRange(removedOrderedEquipment);
 
-            order.AddEquipments(newOrderedEquipment);
+            order.AddEquipments(restoredOrderedEquipment);
             await _musBookingDbContext.SaveChangesAsync(cancellationToken);
 
             var equipmentsDto = new List<EquipmentInOrderDto>();
@@ -142,9 +142,9 @@ namespace MUSbooking.Services.Implement
                 .Where(e => order.Equipments
                     .Any(oe => e.Id == oe.EquipmentId)).ToList();
 
-            var recoverEquipments = RecoveryAmountEquipment(equipments, order.Equipments.ToList());
+            var restoredEquipments = RecoveryAmountEquipment(equipments, order.Equipments.ToList());
 
-            _musBookingDbContext.Equipments.UpdateRange(recoverEquipments);
+            _musBookingDbContext.Equipments.UpdateRange(restoredEquipments);
 
             _musBookingDbContext.Orders.Remove(order);
             await _musBookingDbContext.SaveChangesAsync(cancellationToken);
@@ -152,9 +152,9 @@ namespace MUSbooking.Services.Implement
 
         private List<Equipment> RecoveryAmountEquipment(List<Equipment> equipments, List<OrderedEquipment> oldEquipments)
         {
-            List<Equipment> newEquipments = equipments;
+            List<Equipment> restoredEquipment = equipments;
             oldEquipments.ForEach(oldEquipment => {
-                newEquipments.ForEach(equipment =>
+                restoredEquipment.ForEach(equipment =>
                 {
                     if (equipment.Id == oldEquipment.EquipmentId)
                     {
@@ -162,12 +162,12 @@ namespace MUSbooking.Services.Implement
                     }
                 });
             });
-            return newEquipments;
+            return restoredEquipment;
         }
 
         private List<OrderedEquipment> ManageOrderedEquipment(int orderId, List<OrderedEquipmentDto> requestedEquipment, List<Equipment> availableEquipment)
         {
-            List<OrderedEquipment> newOrderedEquipments = new List<OrderedEquipment>();
+            List<OrderedEquipment> restoredOrderedEquipments = new List<OrderedEquipment>();
 
             requestedEquipment.ForEach(requestedItem =>
             {
@@ -185,11 +185,11 @@ namespace MUSbooking.Services.Implement
                     }
                 });
 
-                newOrderedEquipments.Add(_musBookingDbContext.OrderedEquipments
+                restoredOrderedEquipments.Add(_musBookingDbContext.OrderedEquipments
                     .Add(new OrderedEquipment(requestedItem.Id, orderId, requestedItem.Count, price)).Entity);
             });
 
-            return newOrderedEquipments;
+            return restoredOrderedEquipments;
         }
 
         private void ValidateEquipments(List<OrderedEquipmentDto> requestedEquipment, List<Equipment> availableEquipment)
