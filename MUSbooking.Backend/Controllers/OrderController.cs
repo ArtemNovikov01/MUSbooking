@@ -13,6 +13,7 @@ namespace MUSbooking.Backend.Controllers
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
+
         private readonly IOrderHandler _orderHandler;
         public OrderController(IOrderHandler orderHandler)
         {
@@ -26,11 +27,7 @@ namespace MUSbooking.Backend.Controllers
             {
                 return Ok(await _orderHandler.Get(request, cancellationToken));
             }
-            catch (BadRequestException exception)
-            {
-                return BadRequest(exception.Message);
-            }
-            catch (EntityNotFoundException exception)
+            catch (BaseException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -47,11 +44,7 @@ namespace MUSbooking.Backend.Controllers
             { 
                 return Ok(await _orderHandler.Get(id, cancellationToken));
             }
-            catch (BadRequestException exception)
-            {
-                return BadRequest(exception.Message);
-            }
-            catch (EntityNotFoundException exception)
+            catch (BaseException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -69,11 +62,7 @@ namespace MUSbooking.Backend.Controllers
                 await _orderHandler.Insert(request, cancellationToken);
                 return Ok();
             }
-            catch (BadRequestException exception)
-            {
-                return BadRequest(exception.Message);
-            }
-            catch (EntityNotFoundException exception)
+            catch (BaseException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -90,11 +79,7 @@ namespace MUSbooking.Backend.Controllers
             { 
                 return Ok(await _orderHandler.Update(request, cancellationToken));
             }
-            catch (BadRequestException exception)
-            {
-                return BadRequest(exception.Message);
-            }
-            catch (EntityNotFoundException exception)
+            catch (BaseException exception)
             {
                 return BadRequest(exception.Message);
             }
@@ -112,11 +97,7 @@ namespace MUSbooking.Backend.Controllers
                 await _orderHandler.Delete(id, cancellationToken);
                 return Ok();
             }
-            catch (BadRequestException exception)
-            {
-                return BadRequest(exception.Message);
-            }
-            catch (EntityNotFoundException exception)
+            catch (BaseException exception)
             {
                 return BadRequest(exception.Message);
             }

@@ -11,6 +11,7 @@ namespace MUSbooking.Handlers.Implement
 {
     public class EquipmentHandler : IEquipmentHandler
     {
+
         private readonly IEquipmentService _equipmentService;
         public EquipmentHandler(IEquipmentService equipmentService) 
         {

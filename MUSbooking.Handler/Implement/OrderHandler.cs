@@ -11,6 +11,7 @@ namespace MUSbooking.Handlers.Implement
 {
     public class OrderHandler : IOrderHandler
     {
+
         private readonly IOrderService _orderService;
         public OrderHandler(IOrderService orderService) 
         {
@@ -38,6 +39,7 @@ namespace MUSbooking.Handlers.Implement
 
             return await _orderService.Get(id, cancellationToken);
         }
+
         public async Task Insert(AddOrderRequest request, CancellationToken cancellationToken)
         {
 

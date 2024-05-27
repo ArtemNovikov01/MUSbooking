@@ -14,7 +14,6 @@ namespace MUSbooking.Services.Implement
 {
     public class EquipmentService : IEquipmentService
     {
-
         private readonly IMUSbookingDbContext _musBookingDbContext;
 
         public EquipmentService(IMUSbookingDbContext musBookingDbContext) 
@@ -83,6 +82,7 @@ namespace MUSbooking.Services.Implement
 
             return new GetEquipmentResponse(equipment);
         }
+
         public async Task Delete(int id, CancellationToken cancellationToken)
         {
             var equipment = await _musBookingDbContext.Equipments
