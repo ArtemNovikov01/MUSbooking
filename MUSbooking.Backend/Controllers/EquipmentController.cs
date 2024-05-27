@@ -5,7 +5,7 @@ using MUSbooking.Domain.Models.Requests.EquipmentRequests.UpdateEquipmentRespons
 using MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentResponse;
 using MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentsListResponse;
 using MUSbooking.Exceptions.Common.Exceptions;
-using MUSbooking.Validation.Abstract;
+using MUSbooking.Handlers.Abstract;
 
 namespace MUSbooking.Backend.Controllers
 {
@@ -13,8 +13,8 @@ namespace MUSbooking.Backend.Controllers
     [Route("api/[controller]")]
     public class EquipmentController : ControllerBase
     {
-        private readonly IEquipmentValidator _equipmentHandler;
-        public EquipmentController(IEquipmentValidator equipmentHandler)
+        private readonly IEquipmentHandler _equipmentHandler;
+        public EquipmentController(IEquipmentHandler equipmentHandler)
         {
             _equipmentHandler = equipmentHandler;
         }

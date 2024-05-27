@@ -15,13 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUSbooking.Domain", "MUSboo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUSbooking.Infrastructure.DataBase", "MUSbooking.Infrastructure\MUSbooking.Infrastructure.DataBase.csproj", "{0F527434-E1F3-4CC3-8935-20757CC87333}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUSbooking.Validation", "MUSbooking.Handler\MUSbooking.Validation.csproj", "{33B0634C-8958-46AB-B5AD-AAD18176D9AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUSbooking.Handlers", "MUSbooking.Handler\MUSbooking.Handlers.csproj", "{33B0634C-8958-46AB-B5AD-AAD18176D9AF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUSbooking.Services", "Service\MUSbooking.Services.csproj", "{75DC2E2F-FF86-46EC-AAA6-C4C4FEB51960}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMUSbooking.Infrastructure", "IMUSbooking.Infrastructure\IMUSbooking.Infrastructure.csproj", "{E3C424B2-5B11-40EA-991E-D3E3D57B964E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MUSbooking.Exceptions", "Exceptions\MUSbooking.Exceptions.csproj", "{7B4D52E5-7542-47AF-BE87-4029BB05B92B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MUSbooking.Exceptions", "Exceptions\MUSbooking.Exceptions.csproj", "{7B4D52E5-7542-47AF-BE87-4029BB05B92B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

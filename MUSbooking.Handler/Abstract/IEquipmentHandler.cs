@@ -4,9 +4,9 @@ using MUSbooking.Domain.Models.Requests.EquipmentRequests.UpdateEquipmentRespons
 using MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentResponse;
 using MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentsListResponse;
 
-namespace MUSbooking.Validation.Abstract
+namespace MUSbooking.Handlers.Abstract
 {
-    public interface IEquipmentValidator
+    public interface IEquipmentHandler
     {
         Task<GetEquipmentsListResponse> Get(GetEquipmentsListRequest request, CancellationToken cancellationToken);
         Task<GetEquipmentResponse> Get(int id, CancellationToken cancellationToken);

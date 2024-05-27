@@ -5,14 +5,14 @@ using MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentResponse
 using MUSbooking.Domain.Models.Responses.EquipmentResponses.GetEquipmentsListResponse;
 using MUSbooking.Exceptions.Common.Exceptions;
 using MUSbooking.Services.Abstract;
-using MUSbooking.Validation.Abstract;
+using MUSbooking.Handlers.Abstract;
 
-namespace MUSbooking.Validation.Implement
+namespace MUSbooking.Handlers.Implement
 {
-    public class EquipmentValidator : IEquipmentValidator
+    public class EquipmentHandler : IEquipmentHandler
     {
         private readonly IEquipmentService _equipmentService;
-        public EquipmentValidator(IEquipmentService equipmentService) 
+        public EquipmentHandler(IEquipmentService equipmentService) 
         {
             _equipmentService = equipmentService;
         }

@@ -5,7 +5,7 @@ using MUSbooking.Domain.Models.Requests.OrderRequests.UpdateOrderResponse;
 using MUSbooking.Domain.Models.Responses.OrderResponses.OrderResponse;
 using MUSbooking.Domain.Models.Responses.OrderResponses.OrdersListResponse;
 using MUSbooking.Exceptions.Common.Exceptions;
-using MUSbooking.Validation.Abstract;
+using MUSbooking.Handlers.Abstract;
 
 namespace MUSbooking.Backend.Controllers
 {
@@ -13,8 +13,8 @@ namespace MUSbooking.Backend.Controllers
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
-        private readonly IOrderValidator _orderHandler;
-        public OrderController(IOrderValidator orderHandler)
+        private readonly IOrderHandler _orderHandler;
+        public OrderController(IOrderHandler orderHandler)
         {
             _orderHandler = orderHandler;
         }

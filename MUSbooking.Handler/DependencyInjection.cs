@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MUSbooking.Validation.Abstract;
-using MUSbooking.Validation.Implement;
+using MUSbooking.Handlers.Abstract;
+using MUSbooking.Handlers.Implement;
 
 namespace MUSbooking.Handlers
 {
@@ -8,8 +8,8 @@ namespace MUSbooking.Handlers
     {
         public static IServiceCollection AddHandlers(this IServiceCollection services)
         {
-            services.AddTransient<IEquipmentValidator, EquipmentValidator>();
-            services.AddTransient<IOrderValidator, OrderValidator>();
+            services.AddTransient<IEquipmentHandler, EquipmentHandler>();
+            services.AddTransient<IOrderHandler, OrderHandler>();
 
             return services;
         }

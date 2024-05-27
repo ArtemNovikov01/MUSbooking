@@ -4,16 +4,15 @@ using MUSbooking.Domain.Models.Requests.OrderRequests.UpdateOrderResponse;
 using MUSbooking.Domain.Models.Responses.OrderResponses.OrderResponse;
 using MUSbooking.Domain.Models.Responses.OrderResponses.OrdersListResponse;
 using MUSbooking.Exceptions.Common.Exceptions;
-using MUSbooking.Validation.Abstract;
 using MUSbooking.Services.Abstract;
-using System.Threading;
+using MUSbooking.Handlers.Abstract;
 
-namespace MUSbooking.Validation.Implement
+namespace MUSbooking.Handlers.Implement
 {
-    public class OrderValidator : IOrderValidator
+    public class OrderHandler : IOrderHandler
     {
         private readonly IOrderService _orderService;
-        public OrderValidator(IOrderService orderService) 
+        public OrderHandler(IOrderService orderService) 
         {
             _orderService = orderService;
         }
